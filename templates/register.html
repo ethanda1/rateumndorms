@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div>Sign Up</div>
+<form method = "POST" action="">
+    {{form.hidden_tag()}}
+    {{form.username}}
+    {{form.password}}
+    {{form.submit}}
+</form>
+{% for message in get_flashed_messages() %}
+<div class="toast">
+    <div class="alert alert-error">
+        <span>{{ message }}</span>
+    </div>
+</div>
+{% endfor %}
+{% endblock content %}
+

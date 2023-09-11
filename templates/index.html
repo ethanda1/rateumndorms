@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  {% block body %}
+<div id="container">
+    <div class="navbar bg-base-200 shadow">
+      <div class="flex-1">
+        <a class="btn btn-ghost normal-case text-xl">RateUMNDorms</a>
+      </div>
+      <div class="flex-none">
+        <div class="dropdown dropdown-end">
+        </div>
+
+        {% if current_user.is_authenticated %}
+        <div class="dropdown dropdown-end">
+          <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+            <div class="w-10 rounded-full">
+              <img src="https://umn.lol/images/Goldy.png" />
+            </div>
+            
+          </label>
+          <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+          <li><a href="/logout">Logout</a></li>
+          </ul>
+        </div>
+        {% else %}
+        <a class="btn btn-primary mr-5" href="{{url_for('login')}}">LOGIN</a>
+        <a class="btn btn-primary" href="{{url_for('register')}}">SIGN UP</a>
+        {% endif %}
+      </div>
+    </div>
+    <div>
+    </div>
+    {% endblock body %}
+
+  <div id="dorms" class="flex flex-row flex-wrap gap-9 justify-center mt-20 mb-20">
+    {% for dorm in dorms %}
+    <a class="cursor-pointer">
+    <div class="card w-80 shadow-xl bg-red-900 select-none">
+        <figure class="max-h-44"><img src="{{dorm.image_url}}" alt="dorm" /></figure>
+        <div class="card-body shadow-xl bg-base-100" >
+          <h2 class="card-title">{{ dorm.name }}</h2>
+          <div class="card-actions justify-end">
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </a>
+    </div>
+  
+</div>
+
+{% endblock content %}
