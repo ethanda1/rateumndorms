@@ -1,0 +1,10 @@
+{% extends 'index.html' %}
+
+{% block body %}
+<form method="POST" action="">
+{{ form.hidden_tag() }}
+{{ form.content(class='input input-bordered w-full max-w-xs bg-indigo-600') }}
+{{ form.review(class = 'select w-full max-w-xs') }}
+{{ form.submit(class="btn btn-primary") }}
+</form>
+{% endblock body %}

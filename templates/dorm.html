@@ -1,11 +1,31 @@
-{% extends index.html %}
+{% extends 'index.html' %}
 
 {% block body %}
-  <div class="container mx-auto mt-5">
-    <h1>{{ dorm.name }}</h1>
+<div class="container mx-auto mt-5">
+  <div class="h-50">
+    <img src="{{ dorm.image_url }}" class="w-64 h-64 object-fill">
+    <h1 class="absolute top-20">{{ dorm.name }}</h1>
     <p>{{ dorm.description }}</p>
-    <img src="{{ dorm.image_url }}" alt="{{ dorm.name }} Image" class="w-64 h-64">
-    <p>Average Review: {{ dorm.avgreview }}</p>
-    <!-- Add other dorm-related content here -->
+    
+    <p>Average Review: hi</p>
+
+    <!-- Add a button to create a new post for this dorm -->
+    <a href="{{ url_for('create_post', dorm_name=dorm.name) }}" class="btn btn-primary">Create Post</a>
   </div>
+</div>
+
+<div class="container mx-auto mt-5">
+  <h2>Posts for {{ dorm.name }}</h2>
+  <ul>
+    {% for post in posts %}
+    <li>
+      <p>Review for {{ post.dorm }}</p>
+      <p>Rating: {{ post.review }}</p>
+      <p>{{ post.content }}</p>
+      
+      <!-- Add more post details here -->
+    </li>
+    {% endfor %}
+  </ul>
+</div>
 {% endblock body %}

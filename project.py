@@ -2,7 +2,7 @@ from flask import Flask, render_template, session, url_for, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField
+from wtforms import StringField, SubmitField, SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from flask_bcrypt import Bcrypt
 
@@ -14,7 +14,7 @@ db=SQLAlchemy(app)
 app.secret_key = 'hdjasodjsoaidjsaida'
 dorms = [
         {
-            "name": "17TH AVENUE",
+            "name": "17TH-AVENUE",
             "description": "Built in 2013, the 17th Avenue residence hall has six floors with space for 600 first-year residents.",
             "image_url": "https://housing.umn.edu/sites/housing.umn.edu/files/2021-03/17th%20Ave-University%20ave%20corner.jpg",
             "avgreview":int
@@ -74,9 +74,6 @@ dorms = [
             "avgreview":int
         },
     ]
-
-
-
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
@@ -91,40 +88,28 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(20), nullable=False, unique = True)
     password = db.Column(db.String(80), nullable=False)
 
-# class Dorm(db.Model, UserMixin):
-#     id = db.Column(db.Integer, primary_key=True)
-#     name = db.Column(db.String(255), nullable=False)
-#     description = db.Column(db.String(255), nullable=False)
-#     image_url = db.Column(db.String(255), nullable=False)
-#     avgreview = db.Column(db.Integer, nullable=False)
-
-
-
-# class Review(db.Model):
-#     id = db.Column(db.Integer, primary_key=True)
-#     text = db.Column(db.String(255), nullable=False)
-#     dorm_id = db.Column(db.Integer, db.ForeignKey('dorm.id'), nullable=False)
-    
-    def __init__(self, text, dorm_id):
-        self.text = text
-        self.dorm_id = dorm_id
+class Post(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    dorm = db.Column(db.String(255), nullable=False)
+    review = db.Column(db.Integer, nullable=False)
+    likes = db.Column(db.Integer, nullable=False)
+    content = db.Column(db.String(150), nullable=False)
 
 class RegistrationForm(FlaskForm):
-    username = StringField("Username", validators=[DataRequired(), Length(min=2, max=60)])
-    password = StringField("Username", validators=[DataRequired(), Length(min=2, max=60)])
+    username = StringField("Username", validators=[DataRequired(), Length(min=2, max=60)], render_kw={"placeholder": "Username"})
+    password = StringField("Password", validators=[DataRequired(), Length(min=2, max=60)], render_kw={"placeholder": "Password"})
     submit = SubmitField('Signup')
 
-    def validate_username(self, username):
-        existing_user_username = User.query.filter_by(username=username.data).first()
-        if existing_user_username:
-            flash('"That username already exists"')
-            raise ValidationError("That username already exists")
-            
-
 class LoginForm(FlaskForm):
-    username = StringField("Username", validators=[DataRequired(), Length(min=2, max=60)])
-    password = StringField("Username", validators=[DataRequired(), Length(min=2, max=60)])
+    username = StringField("Username", validators=[DataRequired(), Length(min=2, max=60)], render_kw={"placeholder": "Username"})
+    password = StringField("Password", validators=[DataRequired(), Length(min=2, max=60)], render_kw={"placeholder": "Password"})
     submit = SubmitField('Login')
+
+class PostForm(FlaskForm):
+    content = StringField("Username", validators=[DataRequired(), Length(min=2, max=150)], render_kw={"placeholder": "Your Review"})
+    review = SelectField("Review", choices=[(str(i), str(i)) for i in range(1, 6)], coerce=int)
+    submit = SubmitField('Create Post')
+
 
 
 @app.route("/")
@@ -138,11 +123,15 @@ def register():
         return redirect(url_for('index'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        hashed_password = bcrypt.generate_password_hash(form.password.data)
-        new_user = User(username=form.username.data, password=hashed_password)
-        db.session.add(new_user)
-        db.session.commit()
-        return redirect(url_for('login'))
+        existing_user_username = User.query.filter_by(username=form.username.data).first()
+        if existing_user_username:
+            flash('"That username already exists"')
+        else:
+            hashed_password = bcrypt.generate_password_hash(form.password.data)
+            new_user = User(username=form.username.data, password=hashed_password)
+            db.session.add(new_user)
+            db.session.commit()
+            return redirect(url_for('login'))
     
     return render_template("register.html", form=form)
 
@@ -171,14 +160,37 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
-# @app.route("/dorm/<int:dormid>", methods=['GET', 'POST'])
-# def dorm(dormid):
-#     dorm = Dorm.query.get(dormid)
-#     if not dorm:
-#         flash("Dorm not found", "error")
-#         return redirect(url_for('index'))
-#     return render_template("dorm.html", dorm=dorm)
 
+
+@app.route("/dorm/<dorm_name>", methods=['GET', 'POST'])
+def dorm(dorm_name):
+    dorm = None
+    for dorm_info in dorms:
+        if dorm_info["name"] == dorm_name:
+            posts = Post.query.filter_by(dorm=dorm_name).all()
+            dorm = dorm_info
+            break
+    return render_template("dorm.html", dorm=dorm, posts=posts)
+
+
+@app.route("/dorm/<dorm_name>/create_post", methods=['GET', 'POST'])
+@login_required
+def create_post(dorm_name):
+    dorm = None
+    for dorm_info in dorms:
+        if dorm_info["name"] == dorm_name:
+            dorm = dorm_info
+            break
+    form = PostForm()
+    if form.validate_on_submit():
+        new_post = Post(dorm=dorm_name, content=form.content.data, review=form.review.data, likes=0)
+        db.session.add(new_post)
+        db.session.commit()
+
+        # Redirect the user back to the dorm page after creating the post
+        return redirect(url_for('dorm', dorm_name=dorm_name))  # Pass dorm_name here
+
+    return render_template("create_post.html", dorm=dorm, form=form)
 
 
 if (__name__) == "__main__":

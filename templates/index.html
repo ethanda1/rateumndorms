@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  {% block body %}
+
 <div id="container">
-    <div class="navbar bg-base-200 shadow">
+    <div class="navbar bg-base-200 shadow z-50">
       <div class="flex-1">
-        <a class="btn btn-ghost normal-case text-xl">RateUMNDorms</a>
+        <a class="btn btn-ghost normal-case text-xl" href="/">RateUMNDorms</a>
       </div>
       <div class="flex-none">
         <div class="dropdown dropdown-end">
@@ -31,11 +31,11 @@
     </div>
     <div>
     </div>
-    {% endblock body %}
 
+    {% block body %}
   <div id="dorms" class="flex flex-row flex-wrap gap-9 justify-center mt-20 mb-20">
     {% for dorm in dorms %}
-    <a class="cursor-pointer">
+    <a class="cursor-pointer" href="{{url_for('dorm', dorm_name=dorm.name)}}">
     <div class="card w-80 shadow-xl bg-red-900 select-none">
         <figure class="max-h-44"><img src="{{dorm.image_url}}" alt="dorm" /></figure>
         <div class="card-body shadow-xl bg-base-100" >
@@ -49,5 +49,5 @@
     </div>
   
 </div>
-
+{% endblock body %}
 {% endblock content %}
