@@ -12,7 +12,7 @@ now = datetime.now()
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://kpwgrygmjbklxq:ad649dca00766c6250eb7635b08eb3c3316d00cb10abdb0ed743cd432be678f0@ec2-52-45-200-167.compute-1.amazonaws.com:5432/d7082gjp69inqs'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://vnlwtehyatacik:ea278d3e82294ee9d9ef8dadabc75e4cb59c70e1dc60df62846ba5f6a78efae5@ec2-54-234-13-16.compute-1.amazonaws.com:5432/dbrrhrepl548o6'
 db=SQLAlchemy(app)
 app.secret_key = 'hdjasodjsoaidjsaida'
 dorms = [
@@ -118,13 +118,11 @@ class PostForm(FlaskForm):
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
-    # Calculate average review ratings for each dorm
     dorm_reviews = db.session.query(
     Post.dorm,
     func.round(func.avg(Post.review), 1).label('avg_review')
 ).group_by(Post.dorm).all()
 
-    # Create a dictionary to store the average review ratings for each dorm
     dorm_avg_reviews = {dorm: avg_review for dorm, avg_review in dorm_reviews}
     title = "RateUMNDorms - Home"
     return render_template("index.html", dorms=dorms, dorm_avg_reviews=dorm_avg_reviews, title=title)
