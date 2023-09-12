@@ -11,7 +11,8 @@ from datetime import datetime
 now = datetime.now()
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://owgrdtrkfgxyej:4ee008d49b5218503ffb65f12cddb898255758d8892d56426cb13d3e307e6705@ec2-107-21-67-46.compute-1.amazonaws.com:5432/d5d1amav35vhck'
 db=SQLAlchemy(app)
 app.secret_key = 'hdjasodjsoaidjsaida'
 dorms = [
