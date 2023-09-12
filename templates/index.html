@@ -1,7 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<style>
+  .card {
+    transition: transform 0.3s ease-in-out;
+  }
 
+  .card:hover {
+    transform: scale(1.05); /* You can adjust the scale value for the desired zoom effect */
+  }
+
+  /* Add responsive styles for smaller screens */
+  @media (max-width: 768px) {
+    .card {
+      width: 100%; /* Make the cards full width on smaller screens */
+    }
+  }
+</style>
 <div id="container">
     <div class="navbar bg-base-200 shadow z-50">
       <div class="flex-1">
@@ -40,6 +55,7 @@
         <figure class="max-h-44"><img src="{{dorm.image_url}}" alt="dorm" /></figure>
         <div class="card-body shadow-xl bg-base-100" >
           <h2 class="card-title">{{ dorm.name }}</h2>
+          <p>Overall Rating: <span class="font-bold">{{dorm_avg_reviews[dorm.name]}}</span></p>
           <div class="card-actions justify-end">
           </div>
         </div>

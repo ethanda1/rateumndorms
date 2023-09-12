@@ -1,10 +1,16 @@
 {% extends 'index.html' %}
 
 {% block body %}
-<form method="POST" action="">
-{{ form.hidden_tag() }}
-{{ form.content(class='input input-bordered w-full max-w-xs bg-indigo-600') }}
-{{ form.review(class = 'select w-full max-w-xs') }}
-{{ form.submit(class="btn btn-primary") }}
+<form method="POST" action="" class="flex flex-col items-center justify-center min-h-screen">
+  {{ form.hidden_tag() }}
+  
+  {{ form.content(class=' pl-5 pt-5 pb-56 w-9/12 mx-auto text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500') }}
+  <div class="flex mt-4 gap-5 items-center">
+    <div>Your Rating:</div>
+       
+    {{ form.review(class='select select-bordered') }}
+    
+  </div>
+  <div class="mt-6">{{ form.submit(class="btn btn-primary ml-4") }}</div>
 </form>
 {% endblock body %}
