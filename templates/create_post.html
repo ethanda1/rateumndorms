@@ -1,16 +1,17 @@
 {% extends 'index.html' %}
 
 {% block body %}
-<form method="POST" action="" class="flex flex-col items-center justify-center min-h-screen">
+<form method="POST" action="" class="flex flex-col items-center justify-center mt-10">
   {{ form.hidden_tag() }}
   
   {{ form.content(class='pl-5 pt-5 pb-56 w-9/12 mx-auto text-sm text-gray-900 bg-white rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-100 dark:border-gray-200 dark:placeholder-gray-400 dark:text-gray-900 dark:focus:ring-blue-500 dark:focus:border-blue-500') }}
+  
   <div class="flex mt-4 gap-5 items-center">
     <div>Your Rating:</div>
        
     {{ form.review(class='select select-bordered bg-white') }}
-    
   </div>
+  
   <div class="mt-6">{{ form.submit(class="btn btn-active rounded-none ml-4") }}</div>
 </form>
 {% endblock body %}
