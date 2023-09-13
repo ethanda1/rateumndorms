@@ -1,7 +1,7 @@
 {% extends 'index.html' %}
 
 {% block body %}
-<div class="container mx-auto mt-5">
+<div class="container mx-auto mt-5 bg-white min-h-screen" data-theme="light">
   <div class="relative h-96 select-none">
     <img src="{{ dorm.image_url }}" class="object-cover w-full h-full" alt="{{ dorm.name }}">
     <div class="absolute inset-0 flex flex-col items-center justify-center mt-10">
@@ -20,7 +20,7 @@
     <p class="text-white select-none">{{ dorm.description }}</p>
   </div>
 
-  <div class="container mx-auto mt-5">
+  <div class="container mx-auto mt-5 bg-white rounded-lg shadow-md p-4">
     <ul>
       {% if posts %}
       {% for post in posts %}
