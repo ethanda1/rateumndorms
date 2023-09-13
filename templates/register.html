@@ -6,8 +6,8 @@
   <div class="text-black font-bold text-6xl mb-5">Signup</div>
     <form method="POST" action="">
       {{ form.hidden_tag() }}
-      {{ form.username(class='input input-bordered w-full max-w-xs bg-orange-200 mb-3') }}
-      {{ form.password(class='input input-bordered w-full max-w-xs bg-orange-200') }}
+      {{ form.username(class='input input-bordered w-full max-w-xs bg-gray-300 mb-3') }}
+      {{ form.password(type='password', class='input input-bordered w-full max-w-xs bg-gray-300') }}
       {{ form.submit(class="btn btm-primary") }}
     </form>
 </div>
