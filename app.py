@@ -163,7 +163,7 @@ def index():
     )
 
     dorm_avg_reviews = {dorm: avg_review for dorm, avg_review in dorm_reviews}
-    title = "RateUMNDorms - Home"
+    title = "RateMyUMNDorm - Home"
     return render_template(
         "index.html", dorms=dorms, dorm_avg_reviews=dorm_avg_reviews, title=title
     )
@@ -187,7 +187,7 @@ def register():
             db.session.add(new_user)
             db.session.commit()
             return redirect(url_for("login"))
-    title = "RateUMNDorms - Register"
+    title = "RateMyUMNDorm - Register"
     return render_template("register.html", form=form, title=title)
 
 
@@ -204,7 +204,7 @@ def login():
                 return redirect(url_for("index"))
             else:
                 flash("Incorrect username or password. Please try again.", "info")
-    title = "RateUMNDorms - Login"
+    title = "RateMyUMNDorm - Login"
     return render_template("login.html", form=form, title=title)
 
 
@@ -232,7 +232,7 @@ def dorm(dorm_name):
             posts = Post.query.filter_by(dorm=dorm_name).all()
             dorm = dorm_info
             break
-    title = f"RateUMNDorms - {dorm_name}"
+    title = f"RateMyUMNDorm - {dorm_name}"
     return render_template(
         "dorm.html",
         dorm=dorm,
@@ -263,7 +263,7 @@ def create_post(dorm_name):
         db.session.add(new_post)
         db.session.commit()
         return redirect(url_for("dorm", dorm_name=dorm_name))
-    title = f"RateUMNDorms - Create Review for {dorm_name}"
+    title = f"RateMyUMNDorm - Create Review for {dorm_name}"
     return render_template("create_post.html", dorm=dorm, form=form, title=title)
 
 
