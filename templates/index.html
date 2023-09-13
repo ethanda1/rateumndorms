@@ -2,22 +2,15 @@
 
 {% block content %}
 <style>
-  .navbar {
-    background-color: #3498db;
-    color: white; 
-  }
 
   .navbar a {
     color: white;
   }
 
   .navbar a:hover {
-    color: #2980b9; 
+    color: #c3e4fa; 
   }
 
-  .card {
-    transition: transform 0.3s ease-in-out;
-  }
 
   .card:hover {
     transform: scale(1.05); 
@@ -30,20 +23,12 @@
   }
 
   .card {
-    background-color: #ecf0f1;
     color: #333; 
   }
 
-  .card a {
-    color: #3498db;
-  }
-
-  .card a:hover {
-    color: #2980b9;
-  }
 </style>
 <div id="container" class="bg-white h-screen">
-    <div class="navbar bg-base-200 shadow z-50">
+    <div class="navbar bg-cyan-500 shadow z-50">
       <div class="flex-1">
         <a class="btn btn-ghost normal-case text-xl" href="/">RateUMNDorms</a>
       </div>
@@ -76,7 +61,7 @@
   <div id="dorms" class="flex flex-row flex-wrap gap-9 justify-center mt-20 mb-20">
     {% for dorm in dorms %}
     <a class="cursor-pointer" href="{{url_for('dorm', dorm_name=dorm.name)}}">
-    <div class="card w-80 shadow-xl select-none">
+    <div class="card w-80 bg-gray-100 transition ease-in-out duration-300 hover:bg-white select-none rounded-none shadow-xl">
         <figure class="max-h-44"><img src="{{dorm.image_url}}" alt="dorm" /></figure>
         <div class="card-body shadow-xl" >
           <h2 class="card-title">{{ dorm.name }}</h2>
