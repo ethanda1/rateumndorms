@@ -21,7 +21,7 @@ now = datetime.now()
 app = Flask(__name__)
 app.config[
     "SQLALCHEMY_DATABASE_URI"
-] = "postgresql://umndorms_user:vCinQhmgYLbM9x2N8IFNToup3wBgxWW7@dpg-ck0mhij6fquc73862au0-a.oregon-postgres.render.com/umndorms"
+] = "postgresql://vpkbpcfhitgppv:5741f83ca4ee48f2ac222212a7e9b091b8e62fa0dcdb08b55f03fa944d4e5848@ec2-107-21-67-46.compute-1.amazonaws.com:5432/d1l865sed4k6rr"
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 app.secret_key = "hdjasodjsoaidjsaida"
@@ -99,7 +99,7 @@ def load_user(user_id):
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(20), nullable=False, unique=True)
+    username = db.Column(db.String(500), nullable=False, unique=True)
     password = db.Column(db.String(500), nullable=False)
 
 
@@ -182,6 +182,7 @@ def register():
             flash('"That username already exists"')
         else:
             hashed_password = bcrypt.generate_password_hash(form.password.data)
+            hashed_password = hashed_password.decode("utf-8", "ignore")
             new_user = User(username=form.username.data, password=hashed_password)
             db.session.add(new_user)
             db.session.commit()
