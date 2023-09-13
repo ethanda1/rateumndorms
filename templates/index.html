@@ -11,10 +11,8 @@
     color: #c3e4fa; 
   }
 
-
   .card:hover {
     transform: scale(1.05); 
-
   }
 
   @media (max-width: 768px) {
@@ -28,7 +26,8 @@
   }
 
 </style>
-<div id="container" class="bg-white min-h-screen">
+<div id="container" data-theme="light">
+  <div class="min-h-screen bg-white"> <!-- Add the "bg-white" class here -->
     <div class="navbar bg-cyan-500 shadow z-50">
       <div class="flex-1">
         <a class="btn btn-ghost normal-case text-xl" href="/">RateUMNDorms</a>
@@ -43,7 +42,6 @@
             <div class="w-10 rounded-full">
               <img src="https://umn.lol/images/Goldy.png" />
             </div>
-            
           </label>
           <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
           <li><a href="/logout">Logout</a></li>
@@ -74,7 +72,7 @@
       {% endfor %}
     </a>
     </div>
-  
+  </div>
 </div>
 {% endblock body %}
 {% endblock content %}

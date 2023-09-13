@@ -1,24 +1,27 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<body class="bg-white h-screen flex flex-col justify-center items-center">
-    <div class = 'mb-56'>
-  <div class="text-black font-bold text-6xl mb-5">Login</div>
-    <form method="POST" action="">
-      {{ form.hidden_tag() }}
-      {{ form.username(class='input input-bordered w-full max-w-xs bg-gray-300 mb-3') }}
-      {{ form.password(type='password', class='input input-bordered w-full max-w-xs bg-gray-300') }}
-      {{ form.submit(class="btn btn-primary") }}
-    </form>
+<body class="bg-white">
+  <div class="min-h-screen flex flex-col justify-center items-center">
+    <div class="mb-56">
+      <div class="text-black font-bold text-6xl mb-5">Login</div>
+      <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        {{ form.username(class='input input-bordered w-full max-w-xs bg-gray-300 mb-3') }}
+        {{ form.password(type='password', class='input input-bordered w-full max-w-xs bg-gray-300') }}
+        {{ form.submit(class="btn btn-active") }}
+      </form>
 
-  <a href="{{ url_for('register') }}" class="text-black text-decoration-line: underline">Don't have an account? Sign Up</a>
-</div>
-  {% for message in get_flashed_messages() %}
-  <div class="toast">
-    <div class="alert alert-error">
-      <span>{{ message }}</span>
+      <a href="{{ url_for('register') }}" class="text-black text-decoration-line: underline">Don't have an account? Sign Up</a>
     </div>
+    
+    {% for message in get_flashed_messages() %}
+    <div class="toast">
+      <div class="alert alert-error">
+        <span>{{ message }}</span>
+      </div>
+    </div>
+    {% endfor %}
   </div>
-  {% endfor %}
 </body>
 {% endblock content %}
