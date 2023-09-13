@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<body class="bg-indigo-500 h-screen flex flex-col justify-center items-center">
+<body class="bg-white h-screen flex flex-col justify-center items-center">
     <div class = 'mb-56'>
   <div class="text-black font-bold text-6xl mb-5">Signup</div>
     <form method="POST" action="">
       {{ form.hidden_tag() }}
-      {{ form.username(class='input input-bordered w-full max-w-xs bg-indigo-600') }}
-      {{ form.password(class='input input-bordered w-full max-w-xs bg-indigo-600') }}
+      {{ form.username(class='input input-bordered w-full max-w-xs bg-orange-200 mb-3') }}
+      {{ form.password(class='input input-bordered w-full max-w-xs bg-orange-200') }}
       {{ form.submit(class="btn btm-primary") }}
     </form>
 </div>

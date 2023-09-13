@@ -2,6 +2,22 @@
 
 {% block content %}
 <style>
+  /* Set background color for the entire HTML body */
+
+  /* Navbar styles with a suitable color */
+  .navbar {
+    background-color: #EBE0C6; /* You can change the color code to your preferred color */
+    color: white; /* Text color for the navbar */
+  }
+
+  .navbar a {
+    color: white; /* Link color for the navbar */
+  }
+
+  .navbar a:hover {
+    color: #F5FEFD; /* Link color on hover for the navbar */
+  }
+
   .card {
     transition: transform 0.3s ease-in-out;
   }
@@ -16,8 +32,22 @@
       width: 100%; /* Make the cards full width on smaller screens */
     }
   }
+
+  /* Dorm card styles with a suitable color */
+  .card {
+    background-color: #ecf0f1; /* You can change the color code to your preferred color */
+    color: #333; /* Text color for the card */
+  }
+
+  .card a {
+    color: #3498db; /* Link color for links within the card */
+  }
+
+  .card a:hover {
+    color: #2980b9; /* Link color on hover for links within the card */
+  }
 </style>
-<div id="container">
+<div id="container" class = "bg-white h-screen">
     <div class="navbar bg-base-200 shadow z-50">
       <div class="flex-1">
         <a class="btn btn-ghost normal-case text-xl" href="/">RateUMNDorms</a>
@@ -39,8 +69,8 @@
           </ul>
         </div>
         {% else %}
-        <a class="btn btn-primary mr-5" href="{{url_for('login')}}">LOGIN</a>
-        <a class="btn btn-primary" href="{{url_for('register')}}">SIGN UP</a>
+        <a class="btn btn-neutral mr-5" href="{{url_for('login')}}">LOGIN</a>
+        <a class="btn btn-neutral" href="{{url_for('register')}}">SIGN UP</a>
         {% endif %}
       </div>
     </div>
@@ -51,9 +81,9 @@
   <div id="dorms" class="flex flex-row flex-wrap gap-9 justify-center mt-20 mb-20">
     {% for dorm in dorms %}
     <a class="cursor-pointer" href="{{url_for('dorm', dorm_name=dorm.name)}}">
-    <div class="card w-80 shadow-xl bg-red-900 select-none">
+    <div class="card w-80 shadow-xl select-none">
         <figure class="max-h-44"><img src="{{dorm.image_url}}" alt="dorm" /></figure>
-        <div class="card-body shadow-xl bg-base-100" >
+        <div class="card-body shadow-xl" >
           <h2 class="card-title">{{ dorm.name }}</h2>
           <p>Overall Rating: <span class="font-bold">{{dorm_avg_reviews[dorm.name]}}</span></p>
           <div class="card-actions justify-end">
