@@ -57,19 +57,23 @@
     </div>
 
     {% block body %}
-  <div id="dorms" class="flex flex-row flex-wrap gap-9 justify-center mt-20 mb-20">
-    {% for dorm in dorms %}
-    <a class="cursor-pointer" href="{{url_for('dorm', dorm_name=dorm.name)}}">
-    <div class="card w-80 bg-gray-100 transition ease-in-out duration-300 hover:bg-white select-none rounded-none shadow-xl">
-        <figure class="max-h-44"><img src="{{dorm.image_url}}" alt="dorm" /></figure>
-        <div class="card-body shadow-xl" >
-          <h2 class="card-title">{{ dorm.name }}</h2>
-          <p>Overall Rating: <span class="font-bold">{{dorm_avg_reviews[dorm.name]}}</span></p>
-          <div class="card-actions justify-end">
+    <div id="dorms" class="flex flex-row flex-wrap gap-9 justify-center mt-20 mb-20">
+      {% for dorm in dorms %}
+      <a class="cursor-pointer" href="{{ url_for('dorm', dorm_name=dorm.name) }}">
+        <div class="card w-80 bg-gray-100 transition ease-in-out duration-300 hover:bg-white select-none rounded-none shadow-xl">
+          <figure class="max-h-44"><img src="{{ dorm.image_url }}" alt="dorm" /></figure>
+          <div class="card-body shadow-xl">
+            <h2 class="card-title">{{ dorm.name }}</h2>
+            <p class="flex items-center gap-1">Overall Rating:      <span class="font-bold text-2xl">{{ dorm_data[dorm.name]['avg_review'] }}</span></p>
+            <p><span class="font-semibold">{{ dorm_data[dorm.name]['post_count']}} </span>reviews</p>
+            <div class="card-actions justify-end">
+            </div>
           </div>
         </div>
-      </div>
+      </a>
       {% endfor %}
+    </div>
+    
     </a>
     </div>
   </div>

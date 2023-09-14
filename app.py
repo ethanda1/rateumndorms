@@ -99,8 +99,8 @@ def load_user(user_id):
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(500), nullable=False, unique=True)
-    password = db.Column(db.String(500), nullable=False)
+    username = db.Column(db.String(20), nullable=False, unique=True)
+    password = db.Column(db.String(80), nullable=False)
 
 
 class Post(db.Model, UserMixin):
@@ -108,7 +108,7 @@ class Post(db.Model, UserMixin):
     dorm = db.Column(db.String(255), nullable=False)
     review = db.Column(db.Integer, nullable=False)
     likes = db.Column(db.Integer, nullable=False)
-    content = db.Column(db.String(150), nullable=False)
+    content = db.Column(db.String(3000), nullable=False)
     date_posted = db.Column(db.DateTime, default=datetime.utcnow)
 
 
@@ -129,12 +129,12 @@ class RegistrationForm(FlaskForm):
 class LoginForm(FlaskForm):
     username = StringField(
         "Username",
-        validators=[DataRequired(), Length(min=2, max=60)],
+        validators=[DataRequired(), Length(min=2, max=80)],
         render_kw={"placeholder": "Username"},
     )
     password = StringField(
         "Password",
-        validators=[DataRequired(), Length(min=2, max=60)],
+        validators=[DataRequired(), Length(min=2, max=80)],
         render_kw={"placeholder": "Password"},
     )
     submit = SubmitField("Login")
@@ -143,7 +143,7 @@ class LoginForm(FlaskForm):
 class PostForm(FlaskForm):
     content = TextAreaField(
         "Username",
-        validators=[DataRequired(), Length(min=15, max=1000)],
+        validators=[DataRequired(), Length(min=15, max=3000)],
         render_kw={"placeholder": "Your Review"},
     )
     review = SelectField(
@@ -156,16 +156,24 @@ class PostForm(FlaskForm):
 def index():
     dorm_reviews = (
         db.session.query(
-            Post.dorm, func.round(func.avg(Post.review), 1).label("avg_review")
+            Post.dorm,
+            func.count(Post.review).label("post_count"),
+            func.round(func.avg(Post.review), 1).label("avg_review"),
         )
         .group_by(Post.dorm)
         .all()
     )
+    dorm_data = {}
+    for dorm, post_count, avg_review in dorm_reviews:
+        dorm_data[dorm] = {"post_count": post_count, "avg_review": avg_review}
 
-    dorm_avg_reviews = {dorm: avg_review for dorm, avg_review in dorm_reviews}
     title = "RateMyUMNDorm - Home"
     return render_template(
-        "index.html", dorms=dorms, dorm_avg_reviews=dorm_avg_reviews, title=title
+        "index.html",
+        dorms=dorms,
+        dorm_data=dorm_data,  # Pass the dorm_data dictionary to the template
+        title=title,
+        dorm_reviews=dorm_reviews,
     )
 
 
@@ -230,6 +238,7 @@ def dorm(dorm_name):
     for dorm_info in dorms:
         if dorm_info["name"] == dorm_name:
             posts = Post.query.filter_by(dorm=dorm_name).all()
+            post_count = len(posts)
             dorm = dorm_info
             break
     title = f"RateMyUMNDorm - {dorm_name}"
@@ -239,6 +248,7 @@ def dorm(dorm_name):
         posts=posts,
         dorm_avg_reviews=dorm_avg_reviews,
         title=title,
+        post_count=post_count,
     )
 
 
