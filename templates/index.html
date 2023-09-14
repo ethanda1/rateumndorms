@@ -48,7 +48,7 @@
           </ul>
         </div>
         {% else %}
-        <a class="btn btn-neutral mr-5" href="{{url_for('login')}}">LOGIN</a>
+        <a class="btn btn-neutral" href="{{url_for('login')}}">LOGIN</a>
         <a class="btn btn-neutral" href="{{url_for('register')}}">SIGN UP</a>
         {% endif %}
       </div>
@@ -57,7 +57,7 @@
     </div>
 
     {% block body %}
-    <div id="dorms" class="flex flex-row flex-wrap gap-9 justify-center mt-20 mb-20">
+    <div id="dorms" class="flex flex-row flex-wrap gap-9 justify-center mt-14 mb-20">
       {% for dorm in dorms %}
       <a class="cursor-pointer" href="{{ url_for('dorm', dorm_name=dorm.name) }}">
         <div class="card w-80 bg-gray-100 transition ease-in-out duration-300 hover:bg-white select-none rounded-none shadow-xl">
