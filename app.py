@@ -15,7 +15,6 @@ from flask_bcrypt import Bcrypt
 from sqlalchemy.sql import func
 from datetime import datetime
 
-
 now = datetime.now()
 
 app = Flask(__name__)
@@ -238,6 +237,7 @@ def dorm(dorm_name):
     for dorm_info in dorms:
         if dorm_info["name"] == dorm_name:
             posts = Post.query.filter_by(dorm=dorm_name).all()
+            posts.reverse()
             post_count = len(posts)
             dorm = dorm_info
             break
