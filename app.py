@@ -193,7 +193,9 @@ def register():
             new_user = User(username=form.username.data, password=hashed_password)
             db.session.add(new_user)
             db.session.commit()
-            return redirect(url_for("login"))
+            login_user(new_user)
+            flash('Signup Successful')
+            return redirect(url_for("index"))
     title = "RateMyUMNDorm - Register"
     return render_template("register.html", form=form, title=title)
 
