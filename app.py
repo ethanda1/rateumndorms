@@ -170,7 +170,7 @@ def index():
     return render_template(
         "index.html",
         dorms=dorms,
-        dorm_data=dorm_data,  # Pass the dorm_data dictionary to the template
+        dorm_data=dorm_data,
         title=title,
         dorm_reviews=dorm_reviews,
     )
@@ -194,7 +194,6 @@ def register():
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user)
-            flash('Signup Successful')
             return redirect(url_for("index"))
     title = "RateMyUMNDorm - Register"
     return render_template("register.html", form=form, title=title)
