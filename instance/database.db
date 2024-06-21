@@ -1,0 +1,14 @@
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(20) NOT NULL UNIQUE,
+    password VARCHAR(80) NOT NULL
+);
+
+CREATE TABLE post (
+    id SERIAL PRIMARY KEY,
+    dorm VARCHAR(255) NOT NULL,
+    review INTEGER NOT NULL,
+    likes INTEGER NOT NULL,
+    content VARCHAR(3000) NOT NULL,
+    date_posted TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
