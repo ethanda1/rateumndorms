@@ -20,7 +20,7 @@ now = datetime.now()
 app = Flask(__name__)
 app.config[
     "SQLALCHEMY_DATABASE_URI"
-] = "postgresql://udt3danp6j3fro:p52f53a3f6f1e1da0f620f72b2eb360779df73592d408757bcb76edadd1f1d27d@cd1goc44htrmfn.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/d31tirbif2rglf"
+] = "postgres://u9mk5stjgkqnl3:pec19ecb7524d5ba63b9c713b7e1a0b184b3d74383682e19f357ef45a45064423@c5p86clmevrg5s.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com:5432/d794sclf6t5go7"
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 app.secret_key = "hdjasodjsoaidjsaida"
