@@ -1,4 +1,4 @@
 # rateumndorm
 
 
-https://rateumndorm-71cd56ffab24.herokuapp.com/
+Rate and Review your Dorms: https://umndorms-427250c1fc5f.herokuapp.com/
