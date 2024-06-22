@@ -162,10 +162,10 @@ def index():
         .group_by(Post.dorm)
         .all()
     )
-    dorm_data = {}
+    dorm_data = {dorm["name"]: {"post_count": 0, "avg_review": 0} for dorm in dorms}
     for dorm, post_count, avg_review in dorm_reviews:
-        dorm_data[dorm] = {"post_count": post_count, "avg_review": avg_review}
-
+        dorm_data[dorm]["post_count"] = post_count
+        dorm_data[dorm]["avg_review"] = avg_review
     title = "RateMyUMNDorm - Home"
     return render_template(
         "index.html",
