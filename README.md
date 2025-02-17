@@ -10,8 +10,6 @@ Rate and review dorms at the University of Minnesota! Easily explore user-submit
 
 - **User Reviews:** Submit and view reviews of different dorms.
 - **Rating System:** Rate dorms based on various criteria such as amenities, location, and overall experience.
-- **Search & Filter:** Find dorms by name and sort based on ratings.
-- **Responsive Design:** Optimized for all screen sizes using Tailwind CSS.
 
 ---
 
