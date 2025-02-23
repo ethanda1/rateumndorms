@@ -1,6 +1,6 @@
 # RateMyUMNDorm
 
-Rate and review dorms at the University of Minnesota! Easily explore user-submitted reviews to make an informed decision about where you want to live.
+Rate and review dorms at the University of Minnesota!
 
 🔗 **Live Demo:** [RateMyUMNDorm](https://umndorms-427250c1fc5f.herokuapp.com)
 
